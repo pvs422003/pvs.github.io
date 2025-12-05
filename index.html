@@ -1,123 +1,491 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phạm Sơn</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/Font/themify-icons/themify-icons.css">
+    <title>Phạm Văn Sơn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #6bdaff;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --text-secondary: #666;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --border-color: #eee;
+        }
+
+        body.dark-mode {
+            --primary-color: #eb2f51;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --text-secondary: #aaa;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            --border-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .btn-icon {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-icon:hover {
+            opacity: 0.8;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .post-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+
+body.dark-mode .post-card {
+    box-shadow: 0 5px 10px rgba(230, 219, 219, 0.5), 
+                0 0 0 1px rgba(228, 161, 161, 0.05); 
+    
+    border: none; 
+}
+
+        .post-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post-caption {
+            padding: 15px;
+            font-size: 0.95rem;
+        }
+
+        .post-time {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .badge-me {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-couple {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .badge-em {
+            background: #e0f7fa;
+            color: #23de84;
+        }
+
+        header {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        .bio {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            border: none;
+            background: var(--card-bg);
+            color: var(--text-color);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+
+        #scrollTopBtn {
+            display: none;
+            position: fixed;
+
+
+            bottom: 20px;
+            right: 20px;
+
+            z-index: 1000;
+
+            border: none;
+            outline: none;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+
+
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            padding: 0;
+
+            border-radius: 50%;
+            font-size: 18px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+            transition: opacity 0.3s, transform 0.3s, background-color 0.3s;
+        }
+
+        #scrollTopBtn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 
-<body class="night-mode">
-    <div id="night-sky-container">
-    </div>
+<body>
 
-    <div id="night-sky-container">
-        <div class="stars1"></div>
-        <div class="stars2"></div>
-        <div class="stars3"></div>
-    </div>
-
-    <div id="main">
-        <div id="header">
-            
-
-            <div class="header-right">
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#infor">Infor</a></li>
-                </ul>
-            </div>
-
-           
-
+    <div class="container">
+        <div class="top-bar">
+            <button class="btn-icon" id="theme-toggle"><i class="fas fa-moon"></i> Giao diện</button>
         </div>
-        <div id="slider">
-            <div class="slider-img">
-                <div class="slider-text">
-                    <h1>Welcome to PVS</h1>
-                </div>
-            </div>
-        </div>
-        <div id="content">
-            <div class="content-body" id="infor">
-                <div class="contact-ava-shadow">
-                </div>
-                <div class="content-ava">
-                    <img src="/css/img/z7153658796139_c1709a460beb17cbd0d4459c3afd8917.jpg" alt="">
-                </div>
 
-                <div class="content-inf ">
-                    <div class="icon">
-                        <div class="fb">
-                            <a target="_blank" href="https://www.facebook.com/phamson42">
-                                <i class="ti-facebook"></i>
-                            </a>
-                        </div>
-                        <div class="email js-btn-email">
-                            <i class="ti-email"></i>
-                        </div>
-                        <div class="sdt js-btn-sdt">
-                            <img src="/css/img/—Pngtree—telephone glyph icon vector_5199512.png" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="content-img"></div>
-            </div>
+        <header>
+            <img src="/img/me.jpg" alt="Avatar" class="avatar">
+            <h1>Phạm Văn Sơn</h1>
+            <p class="bio">04-02-2003</p>
+        </header>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterPosts('all', event)">All</button>
+            <button class="filter-btn" onclick="filterPosts('me', event)">Phạm Sơn</button>
+            <button class="filter-btn" onclick="filterPosts('em', event)">Em</button>
+            <button class="filter-btn" onclick="filterPosts('couple', event)">My love ❤️</button>
+        </div>
+
+        <div class="gallery" id="gallery-feed">
         </div>
     </div>
-
-    <div class="modal-sdt">
-        
-            <div class="content-sdt">
-                <button class="js-close-sdt">
-                    <i class="ti-close"></i>
-                </button>
-                <h3>0703139442</h3>
-            </div>
-      
-    </div>
-
-    <div class="modal-email">
-        <div class="content-email">
-            <button class="js-close-email">
-                <i class="ti-close"></i>
-            </button>
-            <h3>phamvanson422003@gmail.com</h3>
-        </div>
-    </div>
-
+    <button onclick="scrollToTop()" id="scrollTopBtn" title="Lên đầu trang"><i class="fas fa-arrow-up"></i></button>
     <script>
-        // Script modal cũ của bạn
-        const icSdt = document.querySelector('.js-btn-sdt')
-        const icEmail = document.querySelector('.js-btn-email')
-        const modalSdt = document.querySelector('.modal-sdt')
-        const modalEmail = document.querySelector('.modal-email')
-        const closeSdt = document.querySelector('.js-close-sdt')
-        const closeEmail = document.querySelector('.js-close-email')
-        function showModalSdt() {
-            modalSdt.classList.add('open')
-        }
-        function showModalEmail() {
-            modalEmail.classList.add('open')
-        }
-        function removeSdt() {
-            modalSdt.classList.remove('open')
-        }
-        function removeEmail() {
-            modalEmail.classList.remove('open')
-        }
-        closeSdt.addEventListener('click', removeSdt)
-        closeEmail.addEventListener('click', removeEmail)
+        const POSTS_DATA = [
+            // Couble
+            {
+                caption: "2Am",
+                category: "couple",
+                imageUrl: "img/cb1.jpg",
+                timestamp: new Date('2025-11-20T10:00:00')
+            },
+            {
+                caption: "2Am",
+                category: "couple",
+                imageUrl: "img/cb2.jpg",
+                timestamp: new Date('2025-11-26T20:00:00')
+            },
+            {
+                caption: "2Am",
+                category: "couple",
+                imageUrl: "img/cb3.jpg",
+                timestamp: new Date('2025-11-26T20:00:00')
+            },
+            {
+                caption: "2Am",
+                category: "couple",
+                imageUrl: "img/cb4.jpg",
+                timestamp: new Date('2025-11-26T20:00:00')
+            },
+            {
+                caption: "2Am",
+                category: "couple",
+                imageUrl: "img/cb5.jpg",
+                timestamp: new Date('2025-11-26T20:00:00')
+            },
 
-        icSdt.addEventListener('click', showModalSdt)
-        icEmail.addEventListener('click', showModalEmail)
 
-        // --- THÊM MỚI: Script cho Nút Bật Tắt Giao Diện ---
-        
-        // --- Hết Script cho Nút Bật Tắt Giao Diện ---
+
+
+
+            // Em
+            {
+                caption: "",
+                category: "em",
+                imageUrl: "img/em2.jpg",
+                timestamp: new Date('2025-12-05T00:00:01')
+            },
+            {
+                caption: "",
+                category: "em",
+                imageUrl: "img/em3.jpg",
+                timestamp: new Date('2025-12-05T00:00:01')
+            },
+            {
+                caption: "",
+                category: "em",
+                imageUrl: "img/em4.jpg",
+                timestamp: new Date('2025-12-05T00:00:01')
+            },
+            {
+                caption: "",
+                category: "em",
+                imageUrl: "img/em5.jpg",
+                timestamp: new Date('2025-12-05T20:00:01')
+            },
+
+
+
+
+            // Anh
+            {
+                caption: "Anh nhớ ra",
+                category: "me",
+                imageUrl: "img/me1.jpg",
+                timestamp: new Date('2024-01-09T08:30:00')
+            },
+            {
+                caption: "",
+                category: "me",
+                imageUrl: "img/me2.jpg",
+                timestamp: new Date('2024-03-03T15:34:00')
+            },
+            {
+                caption: "",
+                category: "me",
+                imageUrl: "img/me3.jpg",
+                timestamp: new Date('2025-09-08T20:39:00')
+            },
+            {
+                caption: "",
+                category: "me",
+                imageUrl: "img/me4.jpg",
+                timestamp: new Date('2025-10-03T21:28:00')
+            },
+            {
+                caption: "",
+                category: "me",
+                imageUrl: "img/me5.jpg",
+                timestamp: new Date('2025-04-30T19:57:00')
+            },
+            {
+                caption: "",
+                category: "me",
+                imageUrl: "img/me6.jpg",
+                timestamp: new Date('2025-04-30T19:33:00')
+            },
+            {
+                caption: "",
+                category: "me",
+                imageUrl: "img/me8.jpg",
+                timestamp: new Date('2024-07-15T04:47:00')
+            },
+            {
+                caption: "",
+                category: "me",
+                imageUrl: "img/me9.jpg",
+                timestamp: new Date('2024-07-15T04:46:00')
+            },
+            {
+                caption: "",
+                category: "me",
+                imageUrl: "img/me10.jpg",
+                timestamp: new Date('2024-02-07T13:22:00')
+            },
+            {
+                caption: "",
+                category: "me",
+                imageUrl: "img/me11.jpg",
+                timestamp: new Date('2024-02-07T13:23:00')
+            },
+            {
+                caption: "",
+                category: "me",
+                imageUrl: "img/me12.jpg",
+                timestamp: new Date('2024-03-03T21:50:00')
+            },
+
+
+        ];
+
+        function loadPosts() {
+            const galleryFeed = document.getElementById('gallery-feed');
+            galleryFeed.innerHTML = '';
+
+            const sortedPosts = POSTS_DATA.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+
+            sortedPosts.forEach(data => {
+
+                let timeString = data.timestamp.toLocaleTimeString() + ' ' + data.timestamp.toLocaleDateString();
+
+                let badgeHtml = '';
+                let postCategory = data.category || 'me';
+
+                if (postCategory === 'me') {
+                    badgeHtml = '<span class="badge badge-me">Phạm Sơn</span>';
+                } else if (postCategory === 'em') {
+                    badgeHtml = '<span class="badge badge-em">Em</span>';
+                } else {
+                    badgeHtml = '<span class="badge badge-couple">My love</span>';
+                }
+
+                const newPost = document.createElement('div');
+                newPost.classList.add('post-card');
+                newPost.setAttribute('data-category', postCategory);
+
+                newPost.innerHTML = `
+                    <img src="${data.imageUrl}" class="post-image" alt="${data.caption}">
+                    <div class="post-caption">
+                        ${badgeHtml}<br>
+                        ${data.caption}
+                        <span class="post-time">${timeString}</span>
+                    </div>
+                `;
+
+                galleryFeed.appendChild(newPost);
+            });
+
+
+            document.querySelector('.filter-btn:first-child').click();
+        }
+
+
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        });
+
+        function filterPosts(category, event) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            let activeBtn = event ? event.target : document.querySelector('.filter-btn[onclick*="' + category + '"]');
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const posts = document.querySelectorAll('.post-card');
+            posts.forEach(post => {
+                if (category === 'all' || post.getAttribute('data-category') === category) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        loadPosts();
+
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            const btn = document.getElementById("scrollTopBtn");
+
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        }
+
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        loadPosts(); 
     </script>
 </body>
 
